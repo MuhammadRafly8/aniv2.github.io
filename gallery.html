@@ -262,7 +262,7 @@
             <div class="card fotbar bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
                 <div class="card-inner">
                     <div class="relative overflow-hidden group">
-                        <img src="../img/gambar 1.jpg" alt="Foto Kita" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <img src="/img/gambar 1.jpg" alt="Foto Kita" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                             <button class="view-photo bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" data-id="1">
                                 <i class="fas fa-search-plus"></i>
@@ -284,7 +284,7 @@
             <div class="card mam bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
                 <div class="card-inner">
                     <div class="relative overflow-hidden group">
-                        <img src="../img/gambar 2.jpg" alt="Kencan Kita" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <img src="/img/gambar 2.jpg" alt="Kencan Kita" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                             <button class="view-photo bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" data-id="2">
                                 <i class="fas fa-search-plus"></i>
@@ -305,7 +305,7 @@
             <div class="card jalan bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
                 <div class="card-inner">
                     <div class="relative overflow-hidden group">
-                        <img src="../img/gambar 3.jpg" alt="Jalan-jalan" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <img src="/img/gambar 3.jpg" alt="Jalan-jalan" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                             <button class="view-photo bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" data-id="3">
                                 <i class="fas fa-search-plus"></i>
@@ -325,7 +325,7 @@
             <!-- Kartu Foto Tambahan 3 -->
             <div class="card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
                 <div class="relative overflow-hidden group">
-                    <img src="../img/gambar 4.jpg" alt="Foto Bareng" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <img src="/img/gambar 4.jpg" alt="Foto Bareng" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <button class="view-photo bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" data-id="4">
                             <i class="fas fa-search-plus"></i>
@@ -377,7 +377,7 @@
         </div>
     </div>
     
-    <script src="../js/main.js"></script>
+    <script src="/js/main.js"></script>
     <script>
         // Script untuk animasi card
         document.addEventListener('DOMContentLoaded', function() {
@@ -442,6 +442,91 @@
             
             closeModal.addEventListener('click', function() {
                 modal.classList.add('hidden');
+            });
+            
+            // Tambahkan fungsi untuk tombol "Muat Lebih Banyak"
+            const loadMoreButton = document.getElementById('loadMore');
+            let currentIndex = 4; // Mulai dari indeks 4 karena sudah ada 4 kartu statis
+            const itemsPerLoad = 4; // Jumlah kartu yang ditambahkan setiap kali tombol diklik
+            
+            loadMoreButton.addEventListener('click', function() {
+                // Ambil data dari galleryData di main.js
+                const gallery = document.getElementById('gallery');
+                
+                // Loop untuk menambahkan kartu baru
+                for (let i = 0; i < itemsPerLoad; i++) {
+                    if (currentIndex < galleryData.length) {
+                        const item = galleryData[currentIndex];
+                        
+                        // Buat elemen kartu baru
+                        const card = document.createElement('div');
+                        card.className = `card ${item.category} bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300`;
+                        
+                        // Isi konten kartu
+                        card.innerHTML = `
+                            <div class="card-inner">
+                                <div class="relative overflow-hidden group">
+                                    <img src="${item.imageUrl}" alt="${item.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                                    <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                        <button class="view-photo bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" data-id="${item.id}">
+                                            <i class="fas fa-search-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="text-lg font-semibold text-gray-800 mb-2">${item.title}</h3>
+                                    <p class="text-gray-600 text-sm mb-3">${item.description}</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs px-2 py-1 bg-gray-200 rounded-full text-gray-700 category-badge">${item.category}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        // Tambahkan kartu ke galeri
+                        gallery.appendChild(card);
+                        
+                        // Tambahkan event listener untuk tombol view pada kartu baru
+                        const newViewButton = card.querySelector('.view-photo');
+                        newViewButton.addEventListener('click', function() {
+                            const cardElement = this.closest('.card');
+                            const image = cardElement.querySelector('img').src;
+                            const title = cardElement.querySelector('h3').textContent;
+                            const description = cardElement.querySelector('p').textContent;
+                            
+                            modalImage.src = image;
+                            modalTitle.textContent = title;
+                            modalDescription.textContent = description;
+                            
+                            modal.classList.remove('hidden');
+                            modal.classList.add('animate-fade-in');
+                        });
+                        
+                        currentIndex++;
+                    }
+                }
+                
+                // Sembunyikan tombol jika semua data sudah ditampilkan
+                if (currentIndex >= galleryData.length) {
+                    loadMoreButton.style.display = 'none';
+                }
+                
+                // Tambahkan animasi untuk kartu baru
+                const newCards = document.querySelectorAll('.card');
+                newCards.forEach((card, index) => {
+                    // Tambahkan delay berbeda untuk setiap kartu
+                    card.style.animationDelay = `${index * 0.1}s`;
+                    
+                    // Tambahkan efek hover acak
+                    const randomEffect = Math.floor(Math.random() * 3);
+                    if (randomEffect === 0) {
+                        card.classList.add('hover-rotate');
+                    } else if (randomEffect === 1) {
+                        card.classList.add('hover-scale');
+                    } else {
+                        card.classList.add('hover-shadow');
+                    }
+                });
             });
         });
     </script>
