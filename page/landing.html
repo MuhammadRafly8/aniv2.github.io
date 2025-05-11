@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Datang</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                        dark: '#1F2937',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1.2s ease-in',
+                        'slide-up': 'slideUp 1s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(50px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+            overflow-x: hidden;
+        }
+        .fancy-title {
+            font-family: 'Dancing Script', cursive;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #4F46E5, #10B981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #4F46E5 0%, #10B981 100%);
+        }
+        .bg-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234f46e5' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .heart-float {
+            position: absolute;
+            color: rgba(79, 70, 229, 0.2);
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+        }
+        .btn-enter {
+            transition: all 0.3s ease;
+        }
+        .btn-enter:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(79, 70, 229, 0.2);
+        }
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+        .envelope:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        .envelope:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            border-top: 100px solid #4F46E5;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            transition: all 0.5s ease;
+        }
+        .envelope:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            border-bottom: 100px solid #10B981;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            transition: all 0.5s ease;
+        }
+        .envelope:hover:before {
+            transform: translateY(-20px) scale(0.9);
+        }
+        .envelope:hover:after {
+            transform: translateY(20px) scale(0.9);
+        }
+        .envelope-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            width: 80%;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        .envelope:hover .envelope-content {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-pattern flex flex-col justify-center items-center p-4">
+    <!-- Floating Hearts Background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <i class="fas fa-heart heart-float text-4xl" style="top: 10%; left: 10%; animation-delay: 0s;"></i>
+        <i class="fas fa-heart heart-float text-5xl" style="top: 20%; left: 80%; animation-delay: 1s;"></i>
+        <i class="fas fa-heart heart-float text-3xl" style="top: 70%; left: 15%; animation-delay: 2s;"></i>
+        <i class="fas fa-heart heart-float text-6xl" style="top: 60%; left: 75%; animation-delay: 3s;"></i>
+        <i class="fas fa-heart heart-float text-2xl" style="top: 40%; left: 30%; animation-delay: 1.5s;"></i>
+        <i class="fas fa-heart heart-float text-4xl" style="top: 30%; left: 60%; animation-delay: 2.5s;"></i>
+        <i class="fas fa-heart heart-float text-5xl" style="top: 80%; left: 40%; animation-delay: 0.5s;"></i>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-3xl mx-auto text-center z-10">
+        <!-- Envelope Animation -->
+        <div class="envelope mx-auto mb-10 animate-fade-in">
+            <div class="envelope-content">
+                <h3 class="text-xl font-bold text-primary mb-2">Klik untuk membuka</h3>
+                <p class="text-gray-600">Ada kejutan spesial menunggumu</p>
+            </div>
+        </div>
+
+        <!-- Welcome Text -->
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 animate-fade-in">
+            <span class="fancy-title gradient-text">WELCOME</span>
+        </h1>
+        
+        <div class="bg-white rounded-xl p-8 shadow-lg mb-8 animate-slide-up" style="animation-delay: 0.3s;">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Hai Sayang 💖</h2>
+            <p class="text-gray-600 mb-4">
+                Selamat datang di halaman spesial yang aku buat spesial untuk kamu. Website ini berisi dokumentasi perjalanan kita selama 2 tahun ini.
+            </p> 
+            <p class="text-gray-600 mb-4">
+                aku harap kamu suka❤️
+            </p>  
+        <!-- Enter Button -->
+        <a href="index.html" class="btn-enter inline-block gradient-bg text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg animate-pulse-slow">
+            <i class="fas fa-heart mr-2"></i> Masuk ke Galeri
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animasi untuk envelope
+            const envelope = document.querySelector('.envelope');
+            envelope.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+            
+            // Tambahkan lebih banyak hati yang bergerak secara acak
+            const body = document.querySelector('body');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('i');
+                heart.classList.add('fas', 'fa-heart', 'heart-float');
+                
+                // Ukuran acak
+                const size = Math.random() * 3 + 1; // 1-4rem
+                heart.style.fontSize = `${size}rem`;
+                
+                // Posisi acak
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                heart.style.left = `${left}%`;
+                heart.style.top = `${top}%`;
+                
+                // Animasi acak
+                const delay = Math.random() * 5;
+                heart.style.animationDelay = `${delay}s`;
+                
+                // Opacity acak
+                const opacity = Math.random() * 0.2 + 0.05;
+                heart.style.color = `rgba(79, 70, 229, ${opacity})`;
+                
+                body.appendChild(heart);
+            }
+        });
+    </script>
+</body>
+</html>

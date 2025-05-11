@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANIVV</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#4ECDC4',
+                        accent: '#FFD166',
+                        dark: '#2A2D34',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 1.5s ease-in',
+                        'slide-up': 'slideUp 1s ease-out',
+                        'heartbeat': 'heartbeat 1.5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(50px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        heartbeat: {
+                            '0%': { transform: 'scale(1)' },
+                            '14%': { transform: 'scale(1.1)' },
+                            '28%': { transform: 'scale(1)' },
+                            '42%': { transform: 'scale(1.1)' },
+                            '70%': { transform: 'scale(1)' },
+                        }
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFF0F5;
+            background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff6b6b' fill-opacity='0.1'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .fancy-title {
+            font-family: 'Dancing Script', cursive;
+        }
+        .card {
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+        .card:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 20px 30px rgba(255, 107, 107, 0.3);
+        }
+        .photo-frame {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px 10px 0 0;
+        }
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: skewX(-25deg);
+            transition: 0.7s;
+            z-index: 1;
+        }
+        .card:hover .photo-frame::before {
+            left: 125%;
+            transition: 0.7s ease-in-out;
+        }
+        .heart-icon {
+            position: absolute;
+            opacity: 0;
+            color: #FF6B6B;
+            animation: float 6s ease-in-out infinite, fadeIn 2s ease-in forwards;
+            animation-delay: calc(var(--delay) * 1s);
+        }
+        .audio-player {
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .audio-player:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .ribbon {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+        }
+        .ribbon-content {
+            position: absolute;
+            display: block;
+            width: 225px;
+            padding: 15px 0;
+            background-color: #FF6B6B;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            right: -25px;
+            top: 30px;
+            transform: rotate(45deg);
+        }
+        /* Tambahkan CSS untuk slideshow */
+        .slideshow-container {
+            position: relative;
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .slide.active {
+            opacity: 1;
+        }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(1.1); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .slide-in {
+            animation: fadeIn 1.5s forwards;
+        }
+        .slide-out {
+            animation: fadeOut 1.5s forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="container mx-auto max-w-4xl">
+        <!-- Navigasi kembali ke galeri -->
+        <div class="mb-6 animate-fade-in">
+            <a href="index.html" class="inline-flex items-center text-primary hover:text-secondary transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Kembali ke Galeri
+            </a>
+        </div>
+        
+        <!-- Judul Halaman -->
+        <div class="text-center mb-10 animate-slide-up">
+            <h1 class="fancy-title text-5xl md:text-6xl text-primary mb-2">happy aniversari sayang</h1>
+            <p class="text-gray-600">Aku harap kamu bahagia dengan hadiah kecil ini</p>
+        </div>
+        
+        <!-- Card Aniversari -->
+        <div class="card bg-white rounded-xl overflow-hidden shadow-xl max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.5s;">
+            <!-- Ribbon -->
+            <div class="ribbon">
+                <span class="ribbon-content">Spesial</span>
+            </div>
+            
+            <!-- Foto -->
+            <div class="photo-frame relative">
+                <div class="slideshow-container w-full h-80 overflow-hidden">
+                    <!-- Foto-foto akan ditambahkan secara dinamis oleh JavaScript -->
+                </div>
+                
+                <!-- Floating Hearts Animation -->
+                <i class="fas fa-heart heart-icon text-xl absolute" style="top: 20%; left: 20%; --delay: 0.5;"></i>
+                <i class="fas fa-heart heart-icon text-2xl absolute" style="top: 30%; left: 70%; --delay: 1.2;"></i>
+                <i class="fas fa-heart heart-icon text-lg absolute" style="top: 60%; left: 30%; --delay: 1.8;"></i>
+                <i class="fas fa-heart heart-icon text-xl absolute" style="top: 70%; left: 80%; --delay: 0.8;"></i>
+                <i class="fas fa-heart heart-icon text-2xl absolute" style="top: 40%; left: 50%; --delay: 1.5;"></i>
+            </div>
+            
+            <!-- Audio Player -->
+            <div class="px-6 py-4 bg-gradient-to-r from-pink-50 to-white">
+                <div class="mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Lagu Spesial Kita</h3>
+                    <audio controls autoplay="w-full audio-player">
+                        <source src="../audio/Sempurna - Andra and the backbone [kygrxgKPLCo].mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+                
+                <!-- Deskripsi -->
+                <div class="mt-6">
+                    <h2 class="text-2xl font-bold text-primary mb-4 flex items-center">
+                        <i class="fas fa-heart animate-heartbeat mr-2"></i> 
+                        Hari Spesial Kita
+                    </h2>
+                    <p class="text-gray-700 mb-4">
+                        Hari ini adalah hari yang sangat spasial,karena tepat hari ini kita merayakan anivverseri ke 2 kita. aku bahagia banget selama dua tahun bersama ini aku mendapatkan banyak hal yang indah dari kamu,
+                        aku pingin ngucapin banyak terimakasih buat kamu yang selalu ada buat aku. terimakasih karena selama ini kamu tetap mau sama aku, meskipun terkadang aku bikin kamu kesel tapi kamu masih tetap sama aku, terimakasihbanget.
+                        dan aku mau minta maaf kalo selama kita ldr aku bikin kamu ngerasa kesepian, tapi jujur itu aku selalu perhatiian sama kamu. yang harus kamu tau bahwa aku hanya punya kamu satu satunya orang yang menemani aku untuk menjalani hari hariku selama ini.
+                        banyak hal yang ingin aku katakan ketika aku selesai nanti, aku pingin ceritain ke kamu bagaimana aku bisa berhasil ngejalanin hari hari beratku karena ada kamu di sisiku. kamu memiliki peran penting banget buat aku selama di masa-masa magang ini. 
+                        aku sayang banget sama kamu, terimakasih telah hadir di hidupku aku senang banget.
+                    </p>
+                    <p class="text-gray-700 mb-4">
+                        Semoga kedepannya kita bisa melewati semua badai yang ada di depan kita ya sayang, aku harap kita kedepannya bisa menjadi pasangan yang saling mengerti satu sama lain dan akan selalu mendapatkan jalan saat lagi ada masalah di antara kita.
+                        tunggu aku pulang ya sayang. kita usahakan hubungan kita sama seperti lagu ini SEMPURNA
+                    </p>
+                    <div class="text-right italic text-gray-600">
+                        Dengan cinta yang tak terhingga,
+                        <div class="fancy-title text-primary text-2xl mt-1">Rafly</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer Card -->
+            <div class="px-6 py-4 bg-gradient-to-r from-primary to-secondary text-white text-center">
+                <div class="flex justify-center space-x-4">
+                    <span class="inline-flex items-center">
+                        <i class="fas fa-calendar-heart mr-2"></i> 
+                        <span id="anniversaryDate">25 mei 2023</span>
+                    </span>
+                    <span class="inline-flex items-center">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span id="daysCount">365 hari bersama</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tombol Berbagi -->
+        <div class="text-center mt-8 animate-fade-in" style="animation-delay: 1s;">
+            <button class="bg-primary hover:bg-secondary text-white font-medium py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center">
+                <i class="fas fa-share-alt mr-2"></i> Bagikan Momen Ini
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // Data foto untuk slideshow
+        const photos = [
+            "../img/fotbar/fotbar 1.jpg",
+            "../img/fotbar/fotbar 2.jpg",
+            "../img/fotbar/fotbar 3.jpg",
+            "../img/fotbar/fotbar 4.jpg",
+            "../img/fotbar/fotbar 5.jpg",
+            "../img/fotbar/fotbar 6.jpg",
+            "../img/fotbar/fotbar 7.jpg",
+            "../img/fotbar/fotbar 8.jpg",
+            "../img/fotbar/fotbar 9.jpg",
+            "../img/fotbar/fotbar 10.jpg",
+            "../img/fotbar/fotbar 11.jpg",
+            "../img/fotbar/fotbar 12.jpg",
+            "../img/fotbar/fotbar 13.jpg",
+            "../img/fotbar/fotbar 14.jpg",
+            "../img/fotbar/fotbar 15.jpg",
+            "../img/fotbar/fotbar 16.jpg",
+            "../img/fotbar/fotbar 17.jpg",
+            "../img/fotbar/fotbar 18.jpg",
+            "../img/fotbar/fotbar 19.jpg",
+            "../img/fotbar/fotbar 24.jpg"
+        ];
+        
+        // Fungsi untuk membuat slideshow
+        function createSlideshow() {
+            const container = document.querySelector('.slideshow-container');
+            
+            // Hapus konten yang ada
+            container.innerHTML = '';
+            
+            // Tambahkan semua foto ke slideshow
+            photos.forEach((photo, index) => {
+                const slide = document.createElement('div');
+                slide.className = `slide ${index === 0 ? 'active' : ''}`;
+                slide.innerHTML = `<img src="${photo}" alt="Foto Aniversari ${index + 1}">`;
+                container.appendChild(slide);
+            });
+            
+            // Mulai slideshow
+            let currentSlide = 0;
+            
+            function nextSlide() {
+                // Hapus kelas active dari slide saat ini
+                const slides = document.querySelectorAll('.slide');
+                slides[currentSlide].classList.remove('active');
+                slides[currentSlide].classList.add('slide-out');
+                
+                // Pindah ke slide berikutnya
+                currentSlide = (currentSlide + 1) % photos.length;
+                
+                // Tambahkan kelas active ke slide berikutnya
+                slides[currentSlide].classList.remove('slide-out');
+                slides[currentSlide].classList.add('active', 'slide-in');
+                
+                // Hapus kelas animasi setelah transisi selesai
+                setTimeout(() => {
+                    slides.forEach(slide => {
+                        slide.classList.remove('slide-in', 'slide-out');
+                    });
+                }, 1500);
+            }
+            
+            // Ganti slide setiap 5 detik
+            setInterval(nextSlide, 5000);
+        }
+        
+        // Animasi untuk memunculkan hati secara acak
+        function createRandomHearts() {
+            const container = document.querySelector('.photo-frame');
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('i');
+                heart.classList.add('fas', 'fa-heart', 'absolute', 'text-white', 'opacity-70');
+                
+                // Ukuran acak
+                const size = Math.random() * 1.5 + 0.5; // 0.5 - 2rem
+                heart.style.fontSize = `${size}rem`;
+                
+                // Posisi acak
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                heart.style.left = `${left}%`;
+                heart.style.top = `${top}%`;
+                
+                // Animasi acak
+                const duration = Math.random() * 10 + 5; // 5-15s
+                const delay = Math.random() * 5;
+                heart.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                
+                container.appendChild(heart);
+            }
+        }
+        
+        // Hitung hari aniversari
+        function updateAnniversaryCounter() {
+            // Ganti dengan tanggal aniversari yang sebenarnya
+            const anniversaryDate = new Date('2023-05-25');
+            const today = new Date();
+            
+            // Hitung selisih hari
+            const diffTime = Math.abs(today - anniversaryDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('daysCount').textContent = `${diffDays} hari bersama`;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            createSlideshow(); // Tambahkan ini
+            createRandomHearts();
+            updateAnniversaryCounter();
+            
+            // Efek hover pada audio player
+            const audioPlayer = document.querySelector('audio');
+            audioPlayer.addEventListener('play', function() {
+                document.querySelector('.audio-player').classList.add('ring-2', 'ring-primary');
+            });
+            audioPlayer.addEventListener('pause', function() {
+                document.querySelector('.audio-player').classList.remove('ring-2', 'ring-primary');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumenter</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                        dark: '#1F2937',
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'zoom-in': 'zoomIn 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        zoomIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Variasi warna untuk card */
+        .card.fotbar {
+            border-left: 4px solid #4F46E5;
+        }
+        .card.jalan {
+            border-left: 4px solid #10B981;
+        }
+        .card.mam {
+            border-left: 4px solid #F59E0B;
+        }
+        
+        /* Efek hover untuk kategori */
+        .card .category-badge {
+            transition: all 0.3s ease;
+        }
+        .card.fotbar:hover .category-badge {
+            background-color: #4F46E5;
+            color: white;
+        }
+        .card.jalan:hover .category-badge {
+            background-color: #10B981;
+            color: white;
+        }
+        .card.mam:hover .category-badge {
+            background-color: #F59E0B;
+            color: white;
+        }
+        
+        /* Animasi untuk card */
+        @keyframes cardPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .card:hover {
+            animation: cardPulse 1.5s infinite;
+        }
+        
+        /* Efek shimmer pada card */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: skewX(-25deg);
+            z-index: 1;
+        }
+        
+        .card:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 150%; }
+        }
+        
+        /* Animasi untuk judul card */
+        .card h3 {
+            transition: color 0.3s ease;
+        }
+        
+        .card:hover h3 {
+            background: linear-gradient(90deg, #4F46E5, #10B981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Animasi untuk tombol view */
+        .view-photo {
+            transition: all 0.3s ease;
+        }
+        
+        .view-photo:hover {
+            background: linear-gradient(135deg, #4F46E5, #10B981);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        /* Efek 3D untuk card */
+        .card {
+            perspective: 1000px;
+        }
+        
+        .card:hover .card-inner {
+            transform: rotateY(5deg);
+        }
+        
+        .card-inner {
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+        }
+        
+        /* Animasi untuk tanggal */
+        .card:hover .date-badge {
+            transform: scale(1.1);
+        }
+        
+        .date-badge {
+            transition: transform 0.3s ease;
+        }
+        .gallery-container {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .gallery-container.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #4F46E5 0%, #10B981 100%);
+        }
+        .text-gradient {
+            background: linear-gradient(90deg, #4F46E5, #10B981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hover-rotate {
+            transition: transform 0.3s ease;
+        }
+        .hover-rotate:hover {
+            transform: rotate(5deg);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        .card-image-container {
+            overflow: hidden;
+            position: relative;
+        }
+        .card-image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+        }
+        .card:hover .card-image-container::after {
+            left: 125%;
+            transition: 0.7s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg border-b-4 border-primary">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-4xl font-bold text-gradient animate-pulse-slow">dokumentasi by rafly</h1>
+            <p class="text-gray-600 mt-2 animate-slide-up">hai sayang👋</p>
+            <!-- Tambahkan navigasi di sini -->
+            <div class="mt-4 flex space-x-4">
+                <a href="landing.html" class="text-primary hover:text-secondary transition-colors duration-300">
+                    <i class="fas fa-home mr-1"></i> Beranda
+                </a>
+                <a href="aniv.html" class="text-primary hover:text-secondary transition-colors duration-300">
+                    <i class="fas fa-heart mr-1"></i> Halaman Aniversari
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Filter dan Pencarian -->
+        <div class="mb-8 flex flex-col md:flex-row justify-between items-center p-4 bg-white rounded-xl shadow-md animate-fade-in">
+            <div class="mb-4 md:mb-0">
+                <select id="filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300">
+                    <option value="all">Semua Kategori</option>
+                    <option value="fotbar">Fotbar</option>
+                    <option value="jalan">Jalan</option>
+                    <option value="mam">Mam</option>
+                </select>
+            </div>
+            <div class="relative">
+                <input type="text" id="search" placeholder="Cari foto..." class="px-4 py-2 pl-10 border border-gray-300 rounded-lg w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300">
+                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div id="gallery" class="gallery-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Kartu Foto Statis -->
+            <div class="card fotbar bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                <div class="card-inner">
+                    <div class="relative overflow-hidden group">
+                        <img src="../img/gambar 1.jpg" alt="Foto Kita" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="view-photo bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" data-id="1">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Momen Kita pertama LDR</h3>
+                        <p class="text-gray-600 text-sm mb-3">Kamu tau ngga kalo pas di momen ini aku sedih banget pas lihat sw kamu ini. kita yang biasanya deket jadi sejauh itu huhu.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-gray-500 date-badge"><i class="far fa-calendar-alt mr-1"></i>04 januari 2025</span>
+                            <span class="text-xs px-2 py-1 bg-gray-200 rounded-full text-gray-700 category-badge">Sad</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kartu Foto Tambahan 1 -->
+            <div class="card mam bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                <div class="card-inner">
+                    <div class="relative overflow-hidden group">
+                        <img src="../img/gambar 2.jpg" alt="Kencan Kita" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="view-photo bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" data-id="2">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">cantikkuu</h3>
+                        <p class="text-gray-600 text-sm mb-3">kamu cantik, selalu cantik❤️</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs px-2 py-1 bg-gray-200 rounded-full text-gray-700 category-badge">cantikku</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kartu Foto Tambahan 2 -->
+            <div class="card jalan bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                <div class="card-inner">
+                    <div class="relative overflow-hidden group">
+                        <img src="../img/gambar 3.jpg" alt="Jalan-jalan" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="view-photo bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" data-id="3">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Cintakuu</h3>
+                        <p class="text-gray-600 text-sm mb-3">kamu adalah alasanku kuat tiap hari</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs px-2 py-1 bg-gray-200 rounded-full text-gray-700 category-badge">cantiku</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kartu Foto Tambahan 3 -->
+            <div class="card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                <div class="relative overflow-hidden group">
+                    <img src="../img/gambar 4.jpg" alt="Foto Bareng" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <button class="view-photo bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" data-id="4">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Sayangku</h3>
+                    <p class="text-gray-600 text-sm mb-3">Aku bahagia banget punya cewe seperti kamu</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs px-2 py-1 bg-gray-200 rounded-full text-gray-700">cantiku</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-10">
+            <button id="loadMore" class="gradient-bg hover:bg-gradient-to-r hover:from-primary hover:to-secondary text-white font-medium py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl float-animation">
+                <i class="fas fa-plus-circle mr-2"></i> Muat Lebih Banyak
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-center items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-2xl font-bold text-gradient">dibuat oleh rafly untuk cewek tercantik di dunia</h3>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal untuk melihat foto -->
+    <div id="photoModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg overflow-hidden max-w-4xl w-full mx-4">
+            <div class="relative">
+                <img id="modalImage" src="" alt="Foto" class="w-full">
+                <button id="closeModal" class="absolute top-2 right-2 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <h2 id="modalTitle" class="text-2xl font-bold text-gray-800 mb-2"></h2>
+                <p id="modalDescription" class="text-gray-600"></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/main.js"></script>
+    <script>
+        // Script untuk animasi card
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tampilkan galeri dengan animasi
+            setTimeout(function() {
+                document.querySelector('.gallery-container').classList.add('loaded');
+            }, 300);
+            
+            // Tambahkan animasi masuk untuk setiap card
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                // Tambahkan delay berbeda untuk setiap card
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                // Tambahkan kelas kategori berdasarkan badge
+                const categoryBadge = card.querySelector('.category-badge');
+                if (categoryBadge) {
+                    const category = categoryBadge.textContent.toLowerCase().trim();
+                    if (category === 'fotbar') {
+                        card.classList.add('fotbar');
+                    } else if (category === 'jalan') {
+                        card.classList.add('jalan');
+                    } else if (category === 'mam') {
+                        card.classList.add('mam');
+                    }
+                }
+                
+                // Tambahkan efek hover acak
+                const randomEffect = Math.floor(Math.random() * 3);
+                if (randomEffect === 0) {
+                    card.classList.add('hover-rotate');
+                } else if (randomEffect === 1) {
+                    card.classList.add('hover-scale');
+                } else {
+                    card.classList.add('hover-shadow');
+                }
+            });
+            
+            // Fungsi untuk modal
+            const viewButtons = document.querySelectorAll('.view-photo');
+            const modal = document.getElementById('photoModal');
+            const closeModal = document.getElementById('closeModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const card = this.closest('.card');
+                    const image = card.querySelector('img').src;
+                    const title = card.querySelector('h3').textContent;
+                    const description = card.querySelector('p').textContent;
+                    
+                    modalImage.src = image;
+                    modalTitle.textContent = title;
+                    modalDescription.textContent = description;
+                    
+                    modal.classList.remove('hidden');
+                    modal.classList.add('animate-fade-in');
+                });
+            });
+            
+            closeModal.addEventListener('click', function() {
+                modal.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
