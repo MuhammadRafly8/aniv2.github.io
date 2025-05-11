@@ -458,12 +458,12 @@
                 }
             });
             
-            // Fungsi untuk menambahkan kartu baru
-            function addNewCards() {
+            loadMoreButton.addEventListener('click', function() {
+                // Ambil data dari galleryData di main.js
                 const gallery = document.getElementById('gallery');
                 let addedCount = 0;
                 
-                // Loop melalui semua data galeri
+                // Loop untuk menambahkan kartu baru
                 for (let i = 0; i < galleryData.length && addedCount < itemsPerLoad; i++) {
                     const item = galleryData[i];
                     
@@ -524,69 +524,67 @@
                 if (loadedIds.size >= galleryData.length) {
                     loadMoreButton.style.display = 'none';
                 }
-                
-                // Tambahkan animasi untuk kartu baru
-                const newCards = document.querySelectorAll('.card');
-                newCards.forEach((card, index) => {
-                    // Tambahkan delay berbeda untuk setiap kartu
-                    card.style.animationDelay = `${index * 0.1}s`;
-                    
-                    // Tambahkan kelas kategori berdasarkan badge
-                    const categoryBadge = card.querySelector('.category-badge');
-                    if (categoryBadge) {
-                        const category = categoryBadge.textContent.toLowerCase().trim();
-                        if (category === 'fotbar') {
-                            card.classList.add('fotbar');
-                        } else if (category === 'jalan') {
-                            card.classList.add('jalan');
-                        } else if (category === 'mam') {
-                            card.classList.add('mam');
-                        }
-                    }
-                });
-            }
-            
-            // Tambahkan event listener untuk tombol "Muat Lebih Banyak"
-            loadMoreButton.addEventListener('click', addNewCards);
-            
-            // Tambahkan fungsi filter
-            const filterSelect = document.getElementById('filter');
-            filterSelect.addEventListener('change', function() {
-                const category = this.value;
-                const cards = document.querySelectorAll('.card');
-                
-                cards.forEach(card => {
-                    if (category === 'all') {
-                        card.style.display = 'block';
-                    } else {
-                        const cardCategory = card.querySelector('.category-badge').textContent.toLowerCase().trim();
-                        if (cardCategory === category) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    }
-                });
             });
             
-            // Tambahkan fungsi pencarian
-            const searchInput = document.getElementById('search');
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                const cards = document.querySelectorAll('.card');
+            // Tambahkan animasi untuk kartu baru
+            const newCards = document.querySelectorAll('.card');
+            newCards.forEach((card, index) => {
+                // Tambahkan delay berbeda untuk setiap kartu
+                card.style.animationDelay = `${index * 0.1}s`;
                 
-                cards.forEach(card => {
-                    const title = card.querySelector('h3').textContent.toLowerCase();
-                    const description = card.querySelector('p').textContent.toLowerCase();
-                    
-                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                // Tambahkan kelas kategori berdasarkan badge
+                const categoryBadge = card.querySelector('.category-badge');
+                if (categoryBadge) {
+                    const category = categoryBadge.textContent.toLowerCase().trim();
+                    if (category === 'fotbar') {
+                        card.classList.add('fotbar');
+                    } else if (category === 'jalan') {
+                        card.classList.add('jalan');
+                    } else if (category === 'mam') {
+                        card.classList.add('mam');
+                    }
+                }
+            });
+        },
+    )
+        
+        // Tambahkan event listener untuk tombol "Muat Lebih Banyak"
+        loadMoreButton.addEventListener('click', addNewCards);
+        
+        // Tambahkan fungsi filter
+        const filterSelect = document.getElementById('filter');
+        filterSelect.addEventListener('change', function() {
+            const category = this.value;
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    const cardCategory = card.querySelector('.category-badge').textContent.toLowerCase().trim();
+                    if (cardCategory === category) {
                         card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
                     }
-                });
+                }
             });
         });
-    </script>
-</body>
-</html>
+        
+        // Tambahkan fungsi pencarian
+        const searchInput = document.getElementById('search');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
