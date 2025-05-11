@@ -452,9 +452,12 @@
             
             // Tambahkan ID kartu statis ke Set
             document.querySelectorAll('.card').forEach(card => {
-                const dataId = card.querySelector('.view-photo').getAttribute('data-id');
-                if (dataId) {
-                    loadedIds.add(parseInt(dataId));
+                const viewButton = card.querySelector('.view-photo');
+                if (viewButton) {
+                    const dataId = viewButton.getAttribute('data-id');
+                    if (dataId) {
+                        loadedIds.add(parseInt(dataId));
+                    }
                 }
             });
             
@@ -530,16 +533,6 @@
                 newCards.forEach((card, index) => {
                     // Tambahkan delay berbeda untuk setiap kartu
                     card.style.animationDelay = `${index * 0.1}s`;
-                    
-                    // Tambahkan efek hover acak
-                    const randomEffect = Math.floor(Math.random() * 3);
-                    if (randomEffect === 0) {
-                        card.classList.add('hover-rotate');
-                    } else if (randomEffect === 1) {
-                        card.classList.add('hover-scale');
-                    } else {
-                        card.classList.add('hover-shadow');
-                    }
                 });
             });
         });

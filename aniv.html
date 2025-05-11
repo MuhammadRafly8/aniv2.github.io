@@ -174,7 +174,7 @@
     <div class="container mx-auto max-w-4xl">
         <!-- Navigasi kembali ke galeri -->
         <div class="mb-6 animate-fade-in">
-            <a href="gallery.html" class="inline-flex items-center text-primary hover:text-secondary transition-colors duration-300">
+            <a href="index.html" class="inline-flex items-center text-primary hover:text-secondary transition-colors duration-300">
                 <i class="fas fa-arrow-left mr-2"></i> Kembali ke Galeri
             </a>
         </div>
@@ -217,7 +217,7 @@
             <div class="px-6 py-4 bg-gradient-to-r from-pink-50 to-white">
                 <div class="mb-4">
                     <h3 class="text-lg font-semibold text-gray-800 mb-2">Lagu Spesial Kita</h3>
-                    <audio controls class="w-full audio-player">
+                    <audio controls autoplay="w-full audio-player">
                         <source src="./audio/Sempurna - Andra and the backbone [kygrxgKPLCo].mp3" type="audio/mpeg">
                     </audio>
                 </div>
@@ -230,11 +230,16 @@
                     </h2>
                     <p class="text-gray-700 mb-4">
                         Hari ini adalah hari yang sangat spasial,karena tepat hari ini kita merayakan anivverseri ke 2 kita. aku bahagia banget selama dua tahun bersama ini aku mendapatkan banyak hal yang indah dari kamu,
+                        aku pingin ngucapin banyak terimakasih buat kamu yang selalu ada buat aku. terimakasih karena selama ini kamu tetap mau sama aku, meskipun terkadang aku bikin kamu kesel tapi kamu masih tetap sama aku, terimakasihbanget.
+                        dan aku mau minta maaf kalo selama kita ldr aku bikin kamu ngerasa kesepian, tapi jujur itu aku selalu perhatiian sama kamu. yang harus kamu tau bahwa aku hanya punya kamu satu satunya orang yang menemani aku untuk menjalani hari hariku selama ini.
+                        banyak hal yang ingin aku katakan ketika aku selesai nanti, aku pingin ceritain ke kamu bagaimana aku bisa berhasil ngejalanin hari hari beratku karena ada kamu di sisiku. kamu memiliki peran penting banget buat aku selama di masa-masa magang ini. 
+                        aku sayang banget sama kamu, terimakasih telah hadir di hidupku aku senang banget.
                     </p>
                     <p class="text-gray-700 mb-4">
-                        Terima kasih telah menjadi bagian dari hidupku, menemaniku dalam suka dan duka, dan selalu mendukungku dalam setiap langkah. Aku berharap kita bisa terus bersama untuk waktu yang sangat lama.
+                        Semoga kedepannya kita bisa melewati semua badai yang ada di depan kita ya sayang, aku harap kita kedepannya bisa menjadi pasangan yang saling mengerti satu sama lain dan akan selalu mendapatkan jalan saat lagi ada masalah di antara kita.
+                        tunggu aku pulang ya sayang. kita usahakan hubungan kita sama seperti lagu ini SEMPURNA
                     </p>
-                    <div class="text-right italic text-gray-600 mt-8">
+                    <div class="text-right italic text-gray-600">
                         Dengan cinta yang tak terhingga,
                         <div class="fancy-title text-primary text-2xl mt-1">Rafly</div>
                     </div>
@@ -289,51 +294,102 @@
             "./img/fotbar/fotbar 24.jpg"
         ];
         
-        // Fungsi untuk slideshow
-        let currentSlide = 0;
-        
-        function setupSlideshow() {
-            // Buat slide untuk setiap foto
-            const slideshowContainer = document.querySelector('.slideshow-container');
-            slideshowContainer.innerHTML = '';
+        // Fungsi untuk membuat slideshow
+        function createSlideshow() {
+            const container = document.querySelector('.slideshow-container');
             
+            // Hapus konten yang ada
+            container.innerHTML = '';
+            
+            // Tambahkan semua foto ke slideshow
             photos.forEach((photo, index) => {
                 const slide = document.createElement('div');
-                slide.className = index === 0 ? 'slide active' : 'slide';
-                
-                const img = document.createElement('img');
-                img.src = photo;
-                img.alt = `Foto Aniversari ${index + 1}`;
-                
-                slide.appendChild(img);
-                slideshowContainer.appendChild(slide);
+                slide.className = `slide ${index === 0 ? 'active' : ''}`;
+                slide.innerHTML = `<img src="${photo}" alt="Foto Aniversari ${index + 1}">`;
+                container.appendChild(slide);
             });
+            
+            // Mulai slideshow
+            let currentSlide = 0;
+            
+            function nextSlide() {
+                // Hapus kelas active dari slide saat ini
+                const slides = document.querySelectorAll('.slide');
+                slides[currentSlide].classList.remove('active');
+                slides[currentSlide].classList.add('slide-out');
+                
+                // Pindah ke slide berikutnya
+                currentSlide = (currentSlide + 1) % photos.length;
+                
+                // Tambahkan kelas active ke slide berikutnya
+                slides[currentSlide].classList.remove('slide-out');
+                slides[currentSlide].classList.add('active', 'slide-in');
+                
+                // Hapus kelas animasi setelah transisi selesai
+                setTimeout(() => {
+                    slides.forEach(slide => {
+                        slide.classList.remove('slide-in', 'slide-out');
+                    });
+                }, 1500);
+            }
+            
+            // Ganti slide setiap 5 detik
+            setInterval(nextSlide, 5000);
         }
         
-        function nextSlide() {
-            const slides = document.querySelectorAll('.slide');
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
+        // Animasi untuk memunculkan hati secara acak
+        function createRandomHearts() {
+            const container = document.querySelector('.photo-frame');
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('i');
+                heart.classList.add('fas', 'fa-heart', 'absolute', 'text-white', 'opacity-70');
+                
+                // Ukuran acak
+                const size = Math.random() * 1.5 + 0.5; // 0.5 - 2rem
+                heart.style.fontSize = `${size}rem`;
+                
+                // Posisi acak
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                heart.style.left = `${left}%`;
+                heart.style.top = `${top}%`;
+                
+                // Animasi acak
+                const duration = Math.random() * 10 + 5; // 5-15s
+                const delay = Math.random() * 5;
+                heart.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                
+                container.appendChild(heart);
+            }
         }
         
         // Hitung hari aniversari
-        function calculateDays() {
+        function updateAnniversaryCounter() {
+            // Ganti dengan tanggal aniversari yang sebenarnya
             const anniversaryDate = new Date('2023-05-25');
             const today = new Date();
+            
+            // Hitung selisih hari
             const diffTime = Math.abs(today - anniversaryDate);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
             document.getElementById('daysCount').textContent = `${diffDays} hari bersama`;
         }
         
-        // Inisialisasi
         document.addEventListener('DOMContentLoaded', function() {
-            setupSlideshow();
-            calculateDays();
+            createSlideshow(); // Tambahkan ini
+            createRandomHearts();
+            updateAnniversaryCounter();
             
-            // Jalankan slideshow setiap 5 detik
-            setInterval(nextSlide, 5000);
+            // Efek hover pada audio player
+            const audioPlayer = document.querySelector('audio');
+            audioPlayer.addEventListener('play', function() {
+                document.querySelector('.audio-player').classList.add('ring-2', 'ring-primary');
+            });
+            audioPlayer.addEventListener('pause', function() {
+                document.querySelector('.audio-player').classList.remove('ring-2', 'ring-primary');
+            });
         });
     </script>
 </body>
