@@ -448,16 +448,27 @@
             const loadMoreButton = document.getElementById('loadMore');
             let currentIndex = 4; // Mulai dari indeks 4 karena sudah ada 4 kartu statis
             const itemsPerLoad = 4; // Jumlah kartu yang ditambahkan setiap kali tombol diklik
+            let loadedIds = new Set(); // Set untuk melacak ID yang sudah dimuat
+            
+            // Tambahkan ID kartu statis ke Set
+            document.querySelectorAll('.card').forEach(card => {
+                const dataId = card.querySelector('.view-photo').getAttribute('data-id');
+                if (dataId) {
+                    loadedIds.add(parseInt(dataId));
+                }
+            });
             
             loadMoreButton.addEventListener('click', function() {
                 // Ambil data dari galleryData di main.js
                 const gallery = document.getElementById('gallery');
+                let addedCount = 0;
                 
                 // Loop untuk menambahkan kartu baru
-                for (let i = 0; i < itemsPerLoad; i++) {
-                    if (currentIndex < galleryData.length) {
-                        const item = galleryData[currentIndex];
-                        
+                for (let i = 0; i < galleryData.length && addedCount < itemsPerLoad; i++) {
+                    const item = galleryData[i];
+                    
+                    // Periksa apakah item sudah dimuat sebelumnya
+                    if (!loadedIds.has(item.id)) {
                         // Buat elemen kartu baru
                         const card = document.createElement('div');
                         card.className = `card ${item.category} bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300`;
@@ -486,6 +497,9 @@
                         // Tambahkan kartu ke galeri
                         gallery.appendChild(card);
                         
+                        // Tambahkan ID ke Set
+                        loadedIds.add(item.id);
+                        
                         // Tambahkan event listener untuk tombol view pada kartu baru
                         const newViewButton = card.querySelector('.view-photo');
                         newViewButton.addEventListener('click', function() {
@@ -502,12 +516,12 @@
                             modal.classList.add('animate-fade-in');
                         });
                         
-                        currentIndex++;
+                        addedCount++;
                     }
                 }
                 
                 // Sembunyikan tombol jika semua data sudah ditampilkan
-                if (currentIndex >= galleryData.length) {
+                if (loadedIds.size >= galleryData.length) {
                     loadMoreButton.style.display = 'none';
                 }
                 
