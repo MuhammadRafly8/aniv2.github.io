@@ -198,7 +198,7 @@ const galleryData = [
         id: 25,
         title: "Bioskop",
         description: "Kita nonton komang seru sekalii, -dingin banget haha",
-        imageUrl: "./img/jalan/jalan.jpg",
+        imageUrl: "./img/jalan/jalan 1.jpg",
         category: "jalan",
         date: "7 April 2025"
     },
@@ -235,7 +235,7 @@ const galleryData = [
         date: "29 November 2024"
     },
     {
-        id: 31,
+        id: 30,
         title: "Kebab",
         description: "Kita keluar beli kebab di wancin inii",
         imageUrl: "./img/jalan/jalan 7.jpg",
@@ -243,7 +243,7 @@ const galleryData = [
         date: "13 September 2024"
     },
     {
-        id: 32,
+        id: 31,
         title: "Aduu warna kulit",
         description: "Ini pas kita beli cilok aci di depan kepiting",
         imageUrl: "./img/jalan/jalan 8.jpg",
@@ -253,7 +253,7 @@ const galleryData = [
     
     // Kategori mam (14 card)
     {
-        id: 33,
+        id: 32,
         title: "Mukbang 2 mie ayam hehe",
         description: "ini aku pas mam mie ayam duaa hehe",
         imageUrl: "./img/mam/mam 1.jpg",
@@ -261,7 +261,7 @@ const galleryData = [
         date: "5 April 2025"
     },
     {
-        id: 34,
+        id: 33,
         title: "Seblak yura",
         description: "nyoba bihunn nyamm nyamm",
         imageUrl: "./img/mam/mam 2.jpg",
@@ -269,7 +269,7 @@ const galleryData = [
         date: "1 Febuary 2025"
     },
     {
-        id: 35,
+        id: 34,
         title: "Mie ayam sebelah rumahmuu",
         description: "Mie ayamm nyamm nyammm",
         imageUrl: "./img/mam/mam 3.jpg",
@@ -277,7 +277,7 @@ const galleryData = [
         date: "25 Oktober 2022"
     },
     {
-        id: 36,
+        id: 35,
         title: "seblak yura",
         description: "ini lebih awal dari yang sebelumnya",
         imageUrl: "./img/mam/mam 4.jpg",
@@ -285,7 +285,7 @@ const galleryData = [
         date: "30 December 2024"
     },
     {
-        id: 37,
+        id: 36,
         title: "mie lamer",
         description: "ini kamu ajak aku ke lamer malemm",
         imageUrl: "./img/mam/mam 5.jpg",
@@ -293,7 +293,7 @@ const galleryData = [
         date: "25 December 2024"
     },
     {
-        id: 38,
+        id: 37,
         title: "Mie ayam sebelahmu part 2",
         description: "mie ayam again nyamm nyamm",
         imageUrl: "./img/mam/mam 6.jpg",
@@ -301,7 +301,7 @@ const galleryData = [
         date: "24 December 2024"
     },
     {
-        id: 39,
+        id: 38,
         title: "Mie apong",
         description: "Ini gara gara uber tutup kita beli apong haha",
         imageUrl: "./img/mam/mam 7.jpg",
@@ -309,7 +309,7 @@ const galleryData = [
         date: "23 November 2024"
     },
     {
-        id: 40,
+        id: 39,
         title: "Yura againn",
         description: "Nyamm nyamm",
         imageUrl: "./img/mam/mam 8.jpg",
@@ -317,7 +317,7 @@ const galleryData = [
         date: "16 November 2024"
     },
     {
-        id: 41,
+        id: 40,
         title: "Mie level tugu",
         description: "Kamu pingin nyoba mie level tugu",
         imageUrl: "./img/mam/mam 9.jpg",
@@ -325,7 +325,7 @@ const galleryData = [
         date: "5 November 2024"
     },
     {
-        id: 42,
+        id: 41,
         title: "Seblak riekhe",
         description: "wawww enaaa",
         imageUrl: "./img/mam/mam 10.jpg",
@@ -333,7 +333,7 @@ const galleryData = [
         date: "21 September 2024"
     },
     {
-        id: 43,
+        id: 42,
         title: "Nasgor diraa",
         description: "Kamu nasgor hitamm hahaaa",
         imageUrl: "./img/mam/mam 11.jpg",
@@ -341,7 +341,7 @@ const galleryData = [
         date: "31 Agustus 2024"
     },
     {
-        id: 44,
+        id: 43,
         title: "Seblak semboro",
         description: "kamu pingin nyoba seblak prasmanan di semboro tapi zonk hahaha",
         imageUrl: "./img/mam/mam 12.jpg",
@@ -349,7 +349,7 @@ const galleryData = [
         date: "14 Juni 2024"
     },
     {
-        id: 45,
+        id: 44,
         title: "Uberr",
         description: "nyammm nyamm enaa uberr",
         imageUrl: "./img/mam/mam 13.jpg",
@@ -357,7 +357,7 @@ const galleryData = [
         date: "29 juni 2024"
     },
     {
-        id: 46,
+        id: 45,
         title: "Warung jubung",
         description: "Ini kita setelah abis dari roxy mampir buat mamm mammm",
         imageUrl: "./img/mam/mam 14.jpg",
