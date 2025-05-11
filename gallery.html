@@ -446,18 +446,15 @@
             
             // Tambahkan fungsi untuk tombol "Muat Lebih Banyak"
             const loadMoreButton = document.getElementById('loadMore');
-            let currentIndex = 4; // Mulai dari indeks 4 karena sudah ada 4 kartu statis
+            let currentIndex = 0; // Mulai dari indeks 0
             const itemsPerLoad = 4; // Jumlah kartu yang ditambahkan setiap kali tombol diklik
             let loadedIds = new Set(); // Set untuk melacak ID yang sudah dimuat
             
             // Tambahkan ID kartu statis ke Set
-            document.querySelectorAll('.card').forEach(card => {
-                const viewButton = card.querySelector('.view-photo');
-                if (viewButton) {
-                    const dataId = viewButton.getAttribute('data-id');
-                    if (dataId) {
-                        loadedIds.add(parseInt(dataId));
-                    }
+            document.querySelectorAll('.view-photo').forEach(button => {
+                const dataId = button.getAttribute('data-id');
+                if (dataId) {
+                    loadedIds.add(parseInt(dataId));
                 }
             });
             
@@ -467,8 +464,9 @@
                 let addedCount = 0;
                 
                 // Loop untuk menambahkan kartu baru
-                for (let i = 0; i < galleryData.length && addedCount < itemsPerLoad; i++) {
-                    const item = galleryData[i];
+                while (addedCount < itemsPerLoad && currentIndex < galleryData.length) {
+                    const item = galleryData[currentIndex];
+                    currentIndex++;
                     
                     // Periksa apakah item sudah dimuat sebelumnya
                     if (!loadedIds.has(item.id)) {
@@ -524,7 +522,7 @@
                 }
                 
                 // Sembunyikan tombol jika semua data sudah ditampilkan
-                if (loadedIds.size >= galleryData.length) {
+                if (currentIndex >= galleryData.length) {
                     loadMoreButton.style.display = 'none';
                 }
                 
@@ -533,6 +531,19 @@
                 newCards.forEach((card, index) => {
                     // Tambahkan delay berbeda untuk setiap kartu
                     card.style.animationDelay = `${index * 0.1}s`;
+                    
+                    // Tambahkan kelas kategori berdasarkan badge
+                    const categoryBadge = card.querySelector('.category-badge');
+                    if (categoryBadge) {
+                        const category = categoryBadge.textContent.toLowerCase().trim();
+                        if (category === 'fotbar') {
+                            card.classList.add('fotbar');
+                        } else if (category === 'jalan') {
+                            card.classList.add('jalan');
+                        } else if (category === 'mam') {
+                            card.classList.add('mam');
+                        }
+                    }
                 });
             });
         });
